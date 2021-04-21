@@ -3,14 +3,14 @@ import { useState, useEffect } from 'react';
 
 /* HOOK REACT EXAMPLE */
 const App = (props: AppProps) => {
-	const [greeting, setGreeting] = useState<string>('');
-
+	const [users, setUsers] = useState<any>([]);
+	console.log(users)
 	useEffect(() => {
 		async function getGreeting() {
 			try {
-				const res = await fetch('/api/hello');
-				const greeting = await res.json();
-				setGreeting(greeting);
+				const res = await fetch('/api/users');
+				const data = await res.json();
+				setUsers(data);
 			} catch (error) {
 				console.log(error);
 			}
@@ -20,7 +20,10 @@ const App = (props: AppProps) => {
 
 	return (
 		<main className="container my-5">
-			<h1 className="text-primary text-center">Hello {greeting}!</h1>
+			<h1 className="text-primary text-center">users</h1>
+			{users.map((user,idx)=>
+				<p key={idx}>{user.first_name}</p>
+			)}
 		</main>
 	);
 };
